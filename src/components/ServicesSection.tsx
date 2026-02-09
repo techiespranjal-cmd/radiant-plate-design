@@ -1,5 +1,6 @@
+import { motion } from "framer-motion";
 import { UtensilsCrossed, Users, Calendar, Truck, ChefHat, Award } from "lucide-react";
-import { FloatingLeaf2, DecorativeCircle } from "@/components/FloatingElements";
+import { FloatingMint, FloatingTomato, DecorativeCircle } from "@/components/FloatingElements";
 
 const services = [
   {
@@ -34,18 +35,45 @@ const services = [
   },
 ];
 
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1,
+    },
+  },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 30 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.6,
+    },
+  },
+};
+
 const ServicesSection = () => {
   return (
     <section id="services" className="relative py-20 lg:py-32 bg-muted overflow-hidden">
-      {/* Decorative Elements */}
-      <DecorativeCircle className="w-80 h-80 -top-40 -right-40 opacity-30" />
-      <DecorativeCircle className="w-48 h-48 bottom-20 -left-20 opacity-20" />
-      <FloatingLeaf2 className="top-20 right-20 opacity-40" />
-      <FloatingLeaf2 className="bottom-40 left-10 opacity-30 animation-delay-1000" />
+      {/* Floating Elements */}
+      <FloatingMint className="top-20 right-16 z-10" size="lg" delay={0} />
+      <FloatingTomato className="bottom-32 left-12 z-10" size="md" delay={1} />
+      <DecorativeCircle className="w-80 h-80 -top-40 -right-40" />
+      <DecorativeCircle className="w-48 h-48 bottom-20 -left-20" />
 
-      <div className="container mx-auto px-4 relative">
+      <div className="container mx-auto px-4 relative z-10">
         {/* Section Header */}
-        <div className="text-center max-w-2xl mx-auto mb-16">
+        <motion.div
+          className="text-center max-w-2xl mx-auto mb-16"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+        >
           <span className="font-elegant text-xl text-primary italic">What We Offer</span>
           <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mt-2">
             Our Premium <span className="text-gradient-warm">Services</span>
@@ -54,20 +82,31 @@ const ServicesSection = () => {
             From intimate gatherings to grand celebrations, we deliver exceptional
             culinary experiences that delight your guests.
           </p>
-        </div>
+        </motion.div>
 
         {/* Services Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <motion.div
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+        >
           {services.map((service, index) => (
-            <div
+            <motion.div
               key={index}
-              className="group bg-card rounded-2xl p-8 shadow-card hover:shadow-elegant transition-all duration-500 hover:-translate-y-2 animate-fade-in-up"
-              style={{ animationDelay: `${index * 100}ms` }}
+              variants={itemVariants}
+              className="group bg-card rounded-2xl p-8 shadow-card hover:shadow-elegant transition-all duration-500 hover:-translate-y-2"
+              whileHover={{ scale: 1.02 }}
             >
               {/* Icon */}
-              <div className="w-16 h-16 rounded-xl bg-gradient-cta flex items-center justify-center shadow-warm mb-6 group-hover:scale-110 transition-transform duration-300">
+              <motion.div
+                className="w-16 h-16 rounded-xl bg-gradient-cta flex items-center justify-center shadow-warm mb-6"
+                whileHover={{ scale: 1.1, rotate: 5 }}
+                transition={{ type: "spring", stiffness: 300 }}
+              >
                 <service.icon className="w-8 h-8 text-primary-foreground" />
-              </div>
+              </motion.div>
 
               {/* Content */}
               <h3 className="font-display text-xl font-bold text-foreground mb-3 group-hover:text-primary transition-colors">
@@ -78,10 +117,15 @@ const ServicesSection = () => {
               </p>
 
               {/* Hover Line */}
-              <div className="mt-6 h-1 w-0 group-hover:w-full bg-gradient-warm rounded-full transition-all duration-500" />
-            </div>
+              <motion.div
+                className="mt-6 h-1 bg-gradient-warm rounded-full"
+                initial={{ width: 0 }}
+                whileHover={{ width: "100%" }}
+                transition={{ duration: 0.3 }}
+              />
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );

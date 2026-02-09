@@ -1,19 +1,25 @@
+import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Phone, Mail, MapPin, ArrowRight } from "lucide-react";
-import { FloatingChili, FloatingLeaf1, DecorativeRing } from "@/components/FloatingElements";
+import { FloatingTurmeric, FloatingMint, DecorativeRing } from "@/components/FloatingElements";
 
 const ContactSection = () => {
   return (
     <section id="contact" className="relative py-20 lg:py-32 bg-muted overflow-hidden">
-      {/* Decorative Elements */}
-      <FloatingChili className="top-20 right-10 opacity-30" />
-      <FloatingLeaf1 className="bottom-20 left-20 opacity-40" />
-      <DecorativeRing className="w-80 h-80 -top-40 -right-40 opacity-10" />
+      {/* Floating Elements */}
+      <FloatingTurmeric className="top-24 right-12 z-10" size="lg" delay={0} />
+      <FloatingMint className="bottom-32 left-8 z-10" size="md" delay={1} />
+      <DecorativeRing className="w-80 h-80 -top-40 -right-40" />
 
-      <div className="container mx-auto px-4 relative">
+      <div className="container mx-auto px-4 relative z-10">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-20">
           {/* Contact Info */}
-          <div className="animate-slide-in-left">
+          <motion.div
+            initial={{ opacity: 0, x: -50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+          >
             <span className="font-elegant text-xl text-primary italic">Get In Touch</span>
             <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mt-2">
               Let's Create Your <span className="text-gradient-warm">Perfect Event</span>
@@ -31,27 +37,40 @@ const ContactSection = () => {
                 { icon: Mail, label: "Email Us", value: "hello@spicehaven.com", href: "mailto:hello@spicehaven.com" },
                 { icon: MapPin, label: "Visit Us", value: "123 Culinary Street, Food District, Delhi 110001", href: "#" },
               ].map((item, index) => (
-                <a
+                <motion.a
                   key={index}
                   href={item.href}
                   className="flex items-start gap-4 group"
+                  initial={{ opacity: 0, x: -30 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.1, duration: 0.5 }}
+                  whileHover={{ x: 10 }}
                 >
-                  <div className="w-12 h-12 rounded-xl bg-gradient-cta flex items-center justify-center shadow-warm flex-shrink-0 group-hover:scale-110 transition-transform">
+                  <motion.div
+                    className="w-12 h-12 rounded-xl bg-gradient-cta flex items-center justify-center shadow-warm flex-shrink-0"
+                    whileHover={{ scale: 1.1, rotate: 5 }}
+                  >
                     <item.icon className="w-5 h-5 text-primary-foreground" />
-                  </div>
+                  </motion.div>
                   <div>
                     <p className="font-body text-sm text-muted-foreground">{item.label}</p>
                     <p className="font-display text-lg text-foreground group-hover:text-primary transition-colors">
                       {item.value}
                     </p>
                   </div>
-                </a>
+                </motion.a>
               ))}
             </div>
-          </div>
+          </motion.div>
 
           {/* Contact Form */}
-          <div className="animate-slide-in-right">
+          <motion.div
+            initial={{ opacity: 0, x: 50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+          >
             <div className="bg-card rounded-3xl p-8 md:p-10 shadow-elegant">
               <h3 className="font-display text-2xl font-bold text-foreground mb-6">
                 Request a Quote
@@ -123,7 +142,7 @@ const ContactSection = () => {
                 </Button>
               </form>
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>
