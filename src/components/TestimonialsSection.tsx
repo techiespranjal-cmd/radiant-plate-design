@@ -1,5 +1,6 @@
+import { motion } from "framer-motion";
 import { Star, Quote } from "lucide-react";
-import { FloatingLeaf2, DecorativeCircle } from "@/components/FloatingElements";
+import { FloatingLemon, FloatingCoriander, DecorativeCircle } from "@/components/FloatingElements";
 
 const testimonials = [
   {
@@ -25,14 +26,21 @@ const testimonials = [
 const TestimonialsSection = () => {
   return (
     <section id="testimonials" className="relative py-20 lg:py-32 bg-foreground overflow-hidden">
-      {/* Decorative Elements */}
+      {/* Floating Elements */}
+      <FloatingLemon className="top-20 right-16 z-10 opacity-60" size="lg" delay={0} />
+      <FloatingCoriander className="bottom-20 left-12 z-10 opacity-50" size="md" delay={1} />
       <DecorativeCircle className="w-96 h-96 -top-48 -left-48 opacity-10" />
       <DecorativeCircle className="w-64 h-64 bottom-0 right-0 opacity-10" />
-      <FloatingLeaf2 className="top-32 right-20 opacity-20" />
 
-      <div className="container mx-auto px-4 relative">
+      <div className="container mx-auto px-4 relative z-10">
         {/* Section Header */}
-        <div className="text-center max-w-2xl mx-auto mb-16">
+        <motion.div
+          className="text-center max-w-2xl mx-auto mb-16"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+        >
           <span className="font-elegant text-xl text-primary italic">Testimonials</span>
           <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold text-card mt-2">
             What Our <span className="text-gradient-warm">Clients Say</span>
@@ -41,25 +49,40 @@ const TestimonialsSection = () => {
             Don't just take our word for it – hear from the families and businesses
             we've had the pleasure to serve.
           </p>
-        </div>
+        </motion.div>
 
         {/* Testimonials Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {testimonials.map((testimonial, index) => (
-            <div
+            <motion.div
               key={index}
-              className="bg-card rounded-2xl p-8 shadow-elegant relative overflow-hidden animate-fade-in-up group hover:-translate-y-2 transition-all duration-500"
-              style={{ animationDelay: `${index * 150}ms` }}
+              className="bg-card rounded-2xl p-8 shadow-elegant relative overflow-hidden group"
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: index * 0.15, duration: 0.6 }}
+              whileHover={{ y: -10 }}
             >
               {/* Quote Icon */}
-              <div className="absolute top-4 right-4 opacity-10 group-hover:opacity-20 transition-opacity">
+              <motion.div
+                className="absolute top-4 right-4 opacity-10 group-hover:opacity-20 transition-opacity"
+                whileHover={{ scale: 1.2 }}
+              >
                 <Quote className="w-16 h-16 text-primary" />
-              </div>
+              </motion.div>
 
               {/* Stars */}
               <div className="flex gap-1 mb-4">
                 {[...Array(testimonial.rating)].map((_, i) => (
-                  <Star key={i} className="w-5 h-5 fill-accent text-accent" />
+                  <motion.div
+                    key={i}
+                    initial={{ opacity: 0, scale: 0 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: index * 0.15 + i * 0.1 }}
+                  >
+                    <Star className="w-5 h-5 fill-accent text-accent" />
+                  </motion.div>
                 ))}
               </div>
 
@@ -70,11 +93,14 @@ const TestimonialsSection = () => {
 
               {/* Author */}
               <div className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded-full bg-gradient-cta flex items-center justify-center">
+                <motion.div
+                  className="w-12 h-12 rounded-full bg-gradient-cta flex items-center justify-center"
+                  whileHover={{ scale: 1.1 }}
+                >
                   <span className="font-display text-lg font-bold text-primary-foreground">
                     {testimonial.name.charAt(0)}
                   </span>
-                </div>
+                </motion.div>
                 <div>
                   <h4 className="font-display font-bold text-foreground">
                     {testimonial.name}
@@ -86,8 +112,13 @@ const TestimonialsSection = () => {
               </div>
 
               {/* Bottom Gradient Line */}
-              <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-warm opacity-0 group-hover:opacity-100 transition-opacity" />
-            </div>
+              <motion.div
+                className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-warm"
+                initial={{ scaleX: 0 }}
+                whileHover={{ scaleX: 1 }}
+                transition={{ duration: 0.3 }}
+              />
+            </motion.div>
           ))}
         </div>
       </div>
